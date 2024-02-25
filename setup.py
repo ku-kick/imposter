@@ -1,9 +1,17 @@
 from setuptools import setup
+import logging
 
+requirements = list()
+
+with open('requirements.txt', 'r') as f:
+    requirements = list(filter(lambda i: len(i) > 0, map(lambda i: i.strip(), f.readlines())))
+
+print(f"requirements: {requirements}")
 
 def get_long_description():
     with open("README.md", 'r', encoding='utf-8') as f:
         return f.read()
+
 
 setup(
     name="imposter",
@@ -18,8 +26,7 @@ setup(
     url="myurl",
     author="imposter",
     setup_requires=["wheel"],
-    install_requires=[
-    ],
+    install_requires=requirements,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
