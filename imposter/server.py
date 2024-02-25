@@ -57,5 +57,8 @@ class MultiprocessingTimeoutServer(multiprocessing.Process, http.HTTPServer):
         self._handler = TimeoutPostGetHandler(configuration)
         self._configuration = configuration
         multiprocessing.Process.__init__(self, target=self.serve_forever)
-        http.HTTPServer.__init__((self._configuration.uri, self._configuration.port), self._handler)
+        http.HTTPServer.__init__(
+            (self._configuration.uri, self._configuration.port),
+            self._handler
+        )
 
