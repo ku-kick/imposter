@@ -25,9 +25,16 @@ class TimeoutPostGetHandler(http.server.BaseHTTPRequestHandler):
     """ Imitates REST API """
 
     def __init__(self, *args, **kwargs):
-        configuration = TimeoutConfiguration()
+        configuration = kwargs.pop('configuration')
         self._configuration = configuration
         http.server.BaseHTTPRequestHandler.__init__(self, *args, **kwargs)
+
+    @staticmethod
+    def make_constructor_wrapper(configuration):
+        def _constructor(*args, **kwargs):
+            return TimeoutPostGetHandler(*args, **kwargs, configuration=configuration)
+
+        return _constructor
 
     def do_GET(self):
         time.sleep(self._configuration.timeout_seconds_get)

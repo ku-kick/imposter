@@ -11,7 +11,7 @@ def parse_arguments():
     parser.add_argument('--timeout-get', type=float, default=0.001, help="Timeout to server GET requests (in seconds)")
     parser.add_argument('--timeout-post', type=float, default=0.001, help="Timeout to server POST requests (in seconds)")
     parser.add_argument('--uri', default='/', help="Rest API URI")
-    parser.add_argument('--port', default=8080, help="TCP port")
+    parser.add_argument('--port', default=8080, help="TCP port", type=int)
 
     return parser.parse_args()
 
@@ -25,7 +25,7 @@ def main():
         port=args.port
     )
 
-    with socketserver.TCPServer(("", configuration.port), imposter.server.TimeoutPostGetHandler) as httpd:
+    with socketserver.TCPServer(("", configuration.port), imposter.server.TimeoutPostGetHandler.make_constructor_wrapper(configuration)) as httpd:
         httpd.serve_forever()
 
 if __name__ == "__main__":
