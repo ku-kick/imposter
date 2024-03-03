@@ -26,7 +26,9 @@ def main():
     )
 
     with socketserver.TCPServer(("", configuration.port), imposter.server.TimeoutPostGetHandler.make_constructor_wrapper(configuration)) as httpd:
+        print(f"Starting webserver with configuration {configuration}")
         httpd.serve_forever()
+
 
 if __name__ == "__main__":
     main()
